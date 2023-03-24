@@ -1,0 +1,191 @@
+.navbar {
+    width: 100%;
+    background-color: #555;
+    overflow: auto;
+  }
+  
+  .navbar a {
+    float: left;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .navbar a:hover {
+    background-color: #000;
+  }
+  
+  .active {
+    background-color: #04AA6D;
+  }
+  
+  @media screen and (max-width: 500px) {
+    .navbar a {
+      float: none;
+      display: block;
+    }
+  }
+
+/*xxxxxxxxxxxxxx*/
+body
+{
+background-color: cornsilk;
+}
+form
+{
+    display: block;
+}
+.form-control{
+display: block;
+width: 100%;
+padding: 0.375rem 0.75rem;
+font-size: 1rem;
+line-height: 1.5;
+color: #495057;
+background-color: #fff;
+background-clip: padding-box;
+border: 1px solid #ced4da;
+border-radius: 0.25rem;
+}
+input
+{
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+
+.details{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns:2fr 1fr ;
+    grid-gap: 30px;
+    margin-top: 10px;
+  
+}
+.details .acentOrders
+{
+    position: relative;
+    display: grid;
+    min-height: 500px;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+   
+}
+.cardHeader
+{
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+}
+.cardHeader h2
+{
+font-weight: 600;
+color: aquamarine;
+}
+.btn
+{
+    position: relative;
+    padding:5px 10px;
+    background: blue;
+    text-decoration: none;
+    color: aliceblue;
+    border-radius: 6px;
+}
+.details table
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.details table thead th
+{
+    font-weight: 600;
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.details .acentOrders table tr
+{
+color: black;
+border-bottom: 1px solid burlywood rgba(0,0,0,0.1);
+}
+.details .acentOrders table tr:last-child
+{
+    border-bottom: none;
+
+}
+.details .acentOrders table tbody tr
+{
+    background: rgb(79, 79, 180);
+    color: white;
+}
+.details .acentOrders table tr td
+{
+    padding:  10px;
+}
+.details .acentOrders table tr td:last-child
+{
+text-align: end;
+}
+.details .acentOrders table tr td:nth-child(2)
+{
+    text-align: end;
+}
+.details .acentOrders table tr td:nth-child(3)
+{
+text-align: center;
+}
+.recentCustomers
+{
+    position: relative;
+    display: grid;
+    min-height: 500px;
+    padding: 20px;
+    background: #ced4da;
+    border-radius: 20px;
+    background: #495057;
+}
+.recentCustomers .ingBx
+{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow:hidden;
+}
+.recentCustomers table tr:hover
+{
+    background: rgb(118, 118, 247);
+    color: aliceblue;
+}
+.recentCustomers table tr td
+{
+    padding: 12px 10px;
+
+}
+.recentCustomers table tr td h4
+{
+font-size: 16px;
+font-weight: 500;
+line-height: 1.2em;
+}
+.recentCustomers table tr td h4 span
+{
+    font-size: 14px;
+    color: black;
+}
+.recentCustomers table tr
+{
+    background: blue;
+    color: white;
+}
+.recentCustomers table tr td h4 span
+{
+    color: beige;
+}
