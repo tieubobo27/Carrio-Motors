@@ -1,22 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.quanlythuvien;
 
-/**
- *
- * @author khang
- */
 public class Sinhvien {
- 
-    String msv, tensv,diachi,sdt,email;
+    private String msv;
+    private String msvOriginal;
+    private String tensv;
+    private String diachi;
+    private String sdt;
+    private String email;
 
     public Sinhvien() {
     }
 
     public Sinhvien(String msv, String tensv, String diachi, String sdt, String email) {
         this.msv = msv;
+        this.msvOriginal = msv; // Lưu giá trị msv ban đầu
         this.tensv = tensv;
         this.diachi = diachi;
         this.sdt = sdt;
@@ -36,6 +33,14 @@ public class Sinhvien {
 
     public void setMsv(String msv) {
         this.msv = msv;
+    }
+
+    public String getMsvOriginal() {
+        return msvOriginal;
+    }
+
+    public void setMsvOriginal(String msvOriginal) {
+        this.msvOriginal = msvOriginal;
     }
 
     public String getTensv() {
@@ -69,8 +74,4 @@ public class Sinhvien {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
-
-            
 }

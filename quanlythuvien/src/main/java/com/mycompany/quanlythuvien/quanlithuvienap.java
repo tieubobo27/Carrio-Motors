@@ -4,6 +4,11 @@
  */
 package com.mycompany.quanlythuvien;
 
+import static com.mycompany.quanlythuvien.SinhvienModify.checkMsvExists;
+import static com.mycompany.quanlythuvien.SinhvienModify.checkMsvExistsInPhieuMuon;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -11,7 +16,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,6 +26,14 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -29,6 +44,13 @@ public class quanlithuvienap extends javax.swing.JFrame {
     DefaultTableModel model;
     DefaultTableModel model1;
     DefaultTableModel model2;
+    
+     private DefaultPieDataset pieDataset;
+    private JFreeChart pieChart;
+    private PiePlot piePlot;
+    private ChartPanel chartPanel;
+    private javax.swing.JButton closeButton;
+  
        
     List<Sinhvien> sinhvienList = new ArrayList<>();
     List<Sach> sachList = new ArrayList<>();
@@ -158,26 +180,24 @@ public class quanlithuvienap extends javax.swing.JFrame {
         btnTrasach = new javax.swing.JButton();
         btntim3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        txtTst = new javax.swing.JTextField();
-        txtTsdg = new javax.swing.JTextField();
-        txtTsm = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        btn_thongke = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        txtTslc = new javax.swing.JTextField();
+        jPanel7 = new javax.swing.JPanel();
+        btn_tilequahan = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        txtMtn = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        txtTsstn = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        txtM1t = new javax.swing.JTextField();
-        txtT1t = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        txtquahan = new javax.swing.JTextField();
+        btn_sachcontrongkho = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        btn_sachmuontrongngay = new javax.swing.JButton();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        btn_sachduocmuontrongthang = new javax.swing.JButton();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        btn_top3 = new javax.swing.JButton();
+        jPanel13 = new javax.swing.JPanel();
+        btn_top330 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1270, 660));
@@ -695,76 +715,124 @@ public class quanlithuvienap extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 153, 0));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel4.setText("Tổng Số Đầu Sách Trong Kho :");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setText("Tổng Số Độc Giả :");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel6.setText("Tổng Số Sách Đang Được Mượn :");
-
-        txtTst.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTstActionPerformed(evt);
-            }
-        });
-
-        txtTsdg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTsdgActionPerformed(evt);
-            }
-        });
-
-        txtTsm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTsmActionPerformed(evt);
-            }
-        });
-
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel7.setText("Thống Kê Số Liệu");
 
-        btn_thongke.setText("Làm Mới");
-        btn_thongke.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        btn_tilequahan.setText("Tỉ lệ quá hạn");
+        btn_tilequahan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_thongkeActionPerformed(evt);
+                btn_tilequahanActionPerformed(evt);
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel8.setText("Số Lượng Sách Còn Trong Kho :");
+        jLabel3.setText("Tỉ lệ trả sách quá hạn");
 
-        txtTslc.addActionListener(new java.awt.event.ActionListener() {
+        btn_sachcontrongkho.setText("Sách còn trong kho");
+        btn_sachcontrongkho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTslcActionPerformed(evt);
+                btn_sachcontrongkhoActionPerformed(evt);
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setText("Tổng Số Sách Được Mượn Trong Ngày :");
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel9.setText("Tổng Số Sách Được Trả Trong Ngày :");
+        jLabel4.setText("Tỉ lệ sách đang được mượn");
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel10.setText("Tổng Số Sách Được Mượn Trong 30 Ngày : ");
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setText("Tổng Số Sách Được Trả Trong 30 Ngày : ");
+        jLabel5.setText("Tỉ lệ sách được mượn trong ngày");
 
-        txtT1t.addActionListener(new java.awt.event.ActionListener() {
+        btn_sachmuontrongngay.setText("Sách Mượn trong ngày");
+        btn_sachmuontrongngay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtT1tActionPerformed(evt);
+                btn_sachmuontrongngayActionPerformed(evt);
             }
         });
 
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel16.setText("Tổng Số Sách Quá Hạn :");
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
-        txtquahan.addActionListener(new java.awt.event.ActionListener() {
+        jLabel6.setText("Số lượng sách được mượn trong 3 tháng gần nhất");
+
+        btn_sachduocmuontrongthang.setText("Sách được mượn trong tháng");
+        btn_sachduocmuontrongthang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtquahanActionPerformed(evt);
+                btn_sachduocmuontrongthangActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+
+        jLabel8.setText("Top 3 sách được mượn nhiều nhất trong ngày ");
+
+        btn_top3.setText("Top3");
+        btn_top3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_top3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+
+        btn_top330.setText("Top 3 tháng");
+        btn_top330.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_top330ActionPerformed(evt);
             }
         });
 
@@ -773,78 +841,86 @@ public class quanlithuvienap extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(425, 425, 425)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addGap(19, 19, 19)
+                                    .addComponent(btn_tilequahan))))
+                        .addGap(79, 79, 79)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_sachcontrongkho)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(493, 493, 493)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btn_sachmuontrongngay))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(97, 97, 97)
+                                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(88, 88, 88)
+                                        .addComponent(btn_sachduocmuontrongthang)))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_thongke, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtTslc)
-                    .addComponent(txtTst)
-                    .addComponent(txtTsdg)
-                    .addComponent(txtTsm)
-                    .addComponent(txtMtn)
-                    .addComponent(txtTsstn)
-                    .addComponent(txtM1t)
-                    .addComponent(txtT1t)
-                    .addComponent(txtquahan))
-                .addContainerGap(490, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(166, 166, 166))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                            .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(32, 32, 32)
+                            .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(15, 15, 15)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btn_top3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_top330)
+                        .addGap(65, 65, 65))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(txtTslc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtTst)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtTsdg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtTsm)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtMtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtTsstn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(txtM1t, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtT1t, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(txtquahan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btn_thongke)
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_tilequahan)
+                    .addComponent(btn_sachcontrongkho)
+                    .addComponent(btn_sachmuontrongngay)
+                    .addComponent(btn_sachduocmuontrongthang)
+                    .addComponent(btn_top3)
+                    .addComponent(btn_top330))
+                .addContainerGap(288, Short.MAX_VALUE))
         );
 
         hienthibandoc.addTab("Thống kê", jPanel3);
@@ -868,141 +944,6 @@ public class quanlithuvienap extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtTslcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTslcActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTslcActionPerformed
-
-    private void btn_thongkeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thongkeActionPerformed
-       try {
-        // Kết nối đến cơ sở dữ liệu
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/qltvap", "root", "");
-
-        // Lấy tổng số sinh viên
-        String query1 = "SELECT COUNT(*) AS total FROM sinhvien";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet1 = statement.executeQuery(query1)) {
-            // Xử lý kết quả
-            if (resultSet1.next()) {
-                int totalSinhVien = resultSet1.getInt("total");
-                txtTsdg.setText(Integer.toString(totalSinhVien));
-            }
-        }
-
-        // Lấy tổng số sách đang được mượn
-        String query2 = "SELECT COUNT(*) AS total FROM phieumuon WHERE trangthaimuon = 'DangMuon'";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet2 = statement.executeQuery(query2)) {
-            // Xử lý kết quả
-            if (resultSet2.next()) {
-                int totalSachMuon = resultSet2.getInt("total");
-                txtTsm.setText(Integer.toString(totalSachMuon));
-            }
-        }
-
-        // Lấy tổng số sách
-        String query3 = "SELECT COUNT(*) AS total FROM sach";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet3 = statement.executeQuery(query3)) {
-            // Xử lý kết quả
-            if (resultSet3.next()) {
-                int totalSach = resultSet3.getInt("total");
-                txtTst.setText(Integer.toString(totalSach));
-            }
-        }
-
-        // Lấy tổng số lượng sách
-        String query4 = "SELECT SUM(soluong) AS total FROM sach";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet4 = statement.executeQuery(query4)) {
-            // Xử lý kết quả
-            if (resultSet4.next()) {
-                int totalSach = resultSet4.getInt("total");
-                txtTslc.setText(Integer.toString(totalSach));
-            }
-        }
-
-        java.util.Date currentDate = new java.util.Date(); // Lấy ngày hiện tại
-        java.sql.Date sqlCurrentDate = new java.sql.Date(currentDate.getTime()); // Chuyển đổi sang kiểu java.sql.Date
-
-        // Lấy tổng số sách được mượn trong ngày
-        String query5 = "SELECT COUNT(*) AS total FROM phieumuon WHERE ngaymuon = ?";
-        try (PreparedStatement preparedStatement5 = connection.prepareStatement(query5)) {
-            preparedStatement5.setDate(1, sqlCurrentDate);
-            try (ResultSet resultSet5 = preparedStatement5.executeQuery()) {
-                // Xử lý kết quả
-                if (resultSet5.next()) {
-                    int totalMuonTrongNgay = resultSet5.getInt("total");
-                    txtMtn.setText(Integer.toString(totalMuonTrongNgay));
-                }
-            }
-        }
-
-        // Lấy tổng số sách được trả trong ngày
-        String query6 = "SELECT COUNT(*) AS total FROM phieumuon WHERE ngaytra = ?";
-        try (PreparedStatement preparedStatement6 = connection.prepareStatement(query6)) {
-            preparedStatement6.setDate(1, sqlCurrentDate);
-            try (ResultSet resultSet6 = preparedStatement6.executeQuery()) {
-                // Xử lý kết quả
-                if (resultSet6.next()) {
-                    int totalSachTraTrongNgay = resultSet6.getInt("total");
-                    txtTsstn.setText(Integer.toString(totalSachTraTrongNgay));
-                }
-            }
-        }
-
-        // Lấy tổng số sách đã được cho mượn trong 30 ngày gần nhất
-        String query7 = "SELECT COUNT(*) AS total FROM phieumuon WHERE ngaymuon >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet7 = statement.executeQuery(query7)) {
-            // Xử lý kết quả
-            if (resultSet7.next()) {
-                int totalSachMuon30Ngay = resultSet7.getInt("total");
-                txtM1t.setText(Integer.toString(totalSachMuon30Ngay));
-            }
-        }
-
-        // Lấy tổng số sách đã trả trong 30 ngày gần nhất
-        String query8 = "SELECT COUNT(*) AS total FROM phieumuon WHERE ngaytra >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet8 = statement.executeQuery(query8)) {
-            // Xử lý kết quả
-            if (resultSet8.next()) {
-                int totalSachTra30Ngay = resultSet8.getInt("total");
-                txtT1t.setText(Integer.toString(totalSachTra30Ngay));
-            }
-        }
-
-        // Lấy tổng số phiếu quá hạn trả
-        String query = "SELECT COUNT(*) AS total FROM phieumuon WHERE ngayphaitra < NOW() AND ngaytra IS NULL";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            // Xử lý kết quả
-            if (resultSet.next()) {
-                int tongSoPhieuQuaHan = resultSet.getInt("total");
-                // Gán giá trị vào thành phần giao diện txtquahan
-                txtquahan.setText(Integer.toString(tongSoPhieuQuaHan));
-            }
-        }
-
-        // Đóng kết nối
-        connection.close();
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-    }
-    }//GEN-LAST:event_btn_thongkeActionPerformed
-
-    private void txtTsmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTsmActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTsmActionPerformed
-
-    private void txtTsdgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTsdgActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTsdgActionPerformed
-
-    private void txtTstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTstActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTstActionPerformed
 
     private void btntim3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntim3ActionPerformed
         // TODO add your handling code here:
@@ -1361,54 +1302,66 @@ public class quanlithuvienap extends javax.swing.JFrame {
     }//GEN-LAST:event_btnXoa4ActionPerformed
 
     private void btnLuu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuu4ActionPerformed
-        // TODO add your handling code here:
+     String msv = txtMsv.getText();
+    String tensv = txtTensv.getText();
+    String diachi = txtDiachi.getText();
+    String sdt = txtSdt.getText();
+    String email = txtEmail.getText();
 
-        String tensv = txtTensv.getText();
-        String diachi = txtDiachi.getText();
-        String sdt = txtSdt.getText();
-        String email = txtEmail.getText();
+    int selectedIndex = hienthi2.getSelectedRow();
+    if (selectedIndex >= 0) {
+        Sinhvien std = sinhvienList.get(selectedIndex);
 
-        int selectedIndex = hienthi2.getSelectedRow();
-        if (selectedIndex >= 0) {
-            Sinhvien std = sinhvienList.get(selectedIndex);
-            std.setTensv(tensv);
-            std.setDiachi(diachi);
-            std.setSdt(sdt);
-            std.setEmail(email);
-
-            int option = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn lưu và cập nhật dữ liệu?");
-            if (option == JOptionPane.YES_OPTION) {
-                SinhvienModify.update(std);
-                showSinhvien();
-                // Đặt các trường về giá trị mặc định sau khi lưu thành công (tuỳ vào yêu cầu của bạn)
-                txtMsv.setText("");
-                txtTensv.setText("");
-                txtDiachi.setText("");
-                txtSdt.setText("");
-                txtEmail.setText("");
-            }
+        // Kiểm tra trạng thái mượn sách của sinh viên
+        if (checkMsvExistsInPhieuMuon(msv)) {
+            JOptionPane.showMessageDialog(this, "Mã sinh viên đã mượn sách và không thể sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+
+        std.setTensv(tensv);
+        std.setDiachi(diachi);
+        std.setSdt(sdt);
+        std.setEmail(email);
+
+        int option = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn lưu và cập nhật dữ liệu?");
+        if (option == JOptionPane.YES_OPTION) {
+            if (checkMsvExists(msv)) {
+                JOptionPane.showMessageDialog(this, "Mã sinh viên đã tồn tại!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            std.setMsv(msv);
+            SinhvienModify.update(std);
+
+            showSinhvien();
+
+            txtMsv.setText("");
+            txtTensv.setText("");
+            txtDiachi.setText("");
+            txtSdt.setText("");
+            txtEmail.setText("");
+        }
+    }
     }//GEN-LAST:event_btnLuu4ActionPerformed
 
     private void btnSua4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSua4ActionPerformed
-        // TODO add your handling code here:
-        int selectedIndex = hienthi2.getSelectedRow();
-        if (selectedIndex >= 0) {
-            Sinhvien std = sinhvienList.get(selectedIndex);
+         int selectedIndex = hienthi2.getSelectedRow();
+    if (selectedIndex >= 0) {
+        Sinhvien std = sinhvienList.get(selectedIndex);
 
-            int option = JOptionPane.showConfirmDialog(this, "Bạn muốn chọn dữ liệu này để sửa?");
-            System.out.println("option: " + option);
-            if (option == JOptionPane.YES_OPTION) {
-                txtMsv.setText(std.getMsv());
-                txtTensv.setText(std.getTensv());
-                txtDiachi.setText(std.getDiachi());
-                txtSdt.setText(std.getSdt());
-                txtEmail.setText(std.getEmail());
-
-                // Vô hiệu hóa ô nhập văn bản txtMsv
-                txtMsv.setEnabled(false);
-            }
+        int option = JOptionPane.showConfirmDialog(this, "Bạn muốn chọn dữ liệu này để sửa?");
+        if (option == JOptionPane.YES_OPTION) {
+            // Lưu giá trị msv ban đầu vào một biến
+            String msv = std.getMsv();
+            txtMsv.setText(msv);
+            txtTensv.setText(std.getTensv());
+            txtDiachi.setText(std.getDiachi());
+            txtSdt.setText(std.getSdt());
+            txtEmail.setText(std.getEmail());
+            // Lưu giá trị msv ban đầu vào thuộc tính của đối tượng std
+            std.setMsvOriginal(msv);
         }
+    }
     }//GEN-LAST:event_btnSua4ActionPerformed
 
     private void btnThem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem4ActionPerformed
@@ -1447,17 +1400,475 @@ public class quanlithuvienap extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSoluongActionPerformed
 
-    private void txtT1tActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtT1tActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtT1tActionPerformed
-
-    private void txtquahanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtquahanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtquahanActionPerformed
-
     private void txtDiachiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiachiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDiachiActionPerformed
+private boolean chartVisible = false; // Biến cờ để theo dõi trạng thái hiển thị của biểu đồ
+    private void btn_tilequahanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tilequahanActionPerformed
+  if (chartVisible) { // Nếu biểu đồ đang hiển thị
+        jPanel7.remove(chartPanel);
+        jPanel7.revalidate();
+        jPanel7.repaint();
+        chartVisible = false; // Đặt trạng thái hiển thị biểu đồ là false
+        btn_tilequahan.setText("Hiển thị biểu đồ"); // Đặt lại nội dung của nút btn_tilequahan
+        btn_tilequahan.setPreferredSize(new Dimension(120, 30)); // Đặt lại kích thước của nút btn_tilequahan
+        jPanel7.setPreferredSize(new Dimension(150, 150)); // Đặt lại kích thước của jPanel7
+    } else { // Nếu biểu đồ không được hiển thị
+        DefaultPieDataset dataset = new DefaultPieDataset();
+
+        // Connect to the database
+        String url = "jdbc:mysql://localhost:3306/qltvap";
+        String username = "root";
+        String password = "";
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            // Execute the query
+            String sql = "SELECT COUNT(*) AS total FROM phieumuon WHERE trangthaimuon = 'DaTra'";
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery(sql)) {
+                if (resultSet.next()) {
+                    int totalRecords = resultSet.getInt("total");
+
+                    // Query for overdue records
+                    sql = "SELECT COUNT(*) AS overdue FROM phieumuon WHERE trangthaimuon = 'DaTra' AND songaymuon > 90";
+                    try (ResultSet overdueResultSet = statement.executeQuery(sql)) {
+                        if (overdueResultSet.next()) {
+                            int overdueRecords = overdueResultSet.getInt("overdue");
+
+                            // Calculate the percentage of overdue records
+                            double overduePercentage = (double) overdueRecords / totalRecords * 100;
+
+                            // Add data to the dataset
+                            dataset.setValue("Quá hạn", overduePercentage);
+                            dataset.setValue("Không quá hạn", 100 - overduePercentage);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Create the chart
+        JFreeChart chart = ChartFactory.createPieChart(
+                "Tỉ lệ trả sách quá hạn",
+                dataset,
+                true,
+                true,
+                false);
+
+        // Get the plot from the chart and cast it to PiePlot
+        PiePlot plot = (PiePlot) chart.getPlot();
+
+        // Customize label format
+        StandardPieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0}: {1} ({2})", java.text.NumberFormat.getNumberInstance(), java.text.NumberFormat.getPercentInstance());
+        plot.setLabelGenerator(labelGenerator);
+
+        // Customize legend label format
+        plot.setLegendLabelGenerator(new StandardPieSectionLabelGenerator("{0} ({2})"));
+
+        // Create the chart panel
+        chartPanel = new ChartPanel(chart);
+
+        // Remove previous chart panel (if any)
+        jPanel7.removeAll();
+
+        // Add the new chart panel to jPanel7
+        jPanel7.setLayout(new BorderLayout());
+        jPanel7.add(chartPanel, BorderLayout.CENTER);
+        jPanel7.validate();
+
+        chartVisible = true; // Đặt trạng thái hiển thị biểu đồ là true
+        btn_tilequahan.setText("Hiển thị biểu đồ"); // Đặt lại nội dung của nút btn_tilequahan
+        btn_tilequahan.setPreferredSize(new Dimension(120, 30)); // Đặt lại kích thước của nút btn_tilequahan
+        jPanel7.setPreferredSize(new Dimension(150, 150)); // Đặt lại kích thước của jPanel7
+    }
+    }//GEN-LAST:event_btn_tilequahanActionPerformed
+
+    private boolean chartVisible1 = false; // Biến cờ để theo dõi trạng thái hiển thị của biểu đồ
+
+    private void btn_sachcontrongkhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sachcontrongkhoActionPerformed
+        if (chartVisible1) { // Nếu biểu đồ đang hiển thị
+        jPanel9.remove(chartPanel);
+        jPanel9.revalidate();
+        jPanel9.repaint();
+        chartVisible1 = false; // Đặt trạng thái hiển thị biểu đồ là false
+        btn_sachcontrongkho.setText("Hiển thị biểu đồ"); // Đặt lại nội dung của nút btn_sachcontrongkho
+        btn_sachcontrongkho.setPreferredSize(new Dimension(120, 30)); // Đặt lại kích thước của nút btn_sachcontrongkho
+        jPanel9.setPreferredSize(new Dimension(150, 150)); // Đặt lại kích thước của jPanel9
+    } else { // Nếu biểu đồ không được hiển thị
+        DefaultPieDataset dataset = new DefaultPieDataset();
+
+        // Connect to the database
+        String url = "jdbc:mysql://localhost:3306/qltvap";
+        String username = "root";
+        String password = "";
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            // Execute the query to get the total number of books in stock
+            String sql = "SELECT SUM(soluong) AS total FROM sach";
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery(sql)) {
+                if (resultSet.next()) {
+                    int totalBooks = resultSet.getInt("total");
+
+                    // Query to get the total number of books currently being borrowed
+                    sql = "SELECT COUNT(*) AS borrowed FROM phieumuon WHERE trangthaimuon = 'DangMuon'";
+                    try (ResultSet borrowedResultSet = statement.executeQuery(sql)) {
+                        if (borrowedResultSet.next()) {
+                            int borrowedBooks = borrowedResultSet.getInt("borrowed");
+
+                            // Calculate the percentage of borrowed books
+                            double borrowedPercentage = (double) borrowedBooks / (borrowedBooks + totalBooks) * 100;
+                            double remainingPercentage = 100 - borrowedPercentage;
+
+                            // Add data to the dataset
+                            dataset.setValue("Đang mượn", borrowedPercentage);
+                            dataset.setValue("Còn trong kho", remainingPercentage);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Create the chart
+        JFreeChart chart = ChartFactory.createPieChart(
+                "Tỉ lệ sách được mượn",
+                dataset,
+                true,
+                true,
+                false);
+
+        // Get the plot from the chart and cast it to PiePlot
+        PiePlot plot = (PiePlot) chart.getPlot();
+
+        // Customize label format
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        StandardPieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0}: {1} ({2})", numberFormat, NumberFormat.getPercentInstance());
+        plot.setLabelGenerator(labelGenerator);
+
+        // Customize legend label format
+        plot.setLegendLabelGenerator(new StandardPieSectionLabelGenerator("{0} ({2})", numberFormat, NumberFormat.getPercentInstance()));
+
+        // Create the chart panel
+        chartPanel = new ChartPanel(chart);
+
+        // Remove previous chart panel (if any)
+        jPanel9.removeAll();
+
+        // Add the new chart panel to jPanel9
+        jPanel9.setLayout(new BorderLayout());
+        jPanel9.add(chartPanel, BorderLayout.CENTER);
+        jPanel9.validate();
+
+        chartVisible1 = true; // Đặt trạng thái hiển thị biểu đồ là true
+        btn_sachcontrongkho.setText("Ẩn biểu đồ"); // Đặt lại nội dung của nút btn_sachcontrongkho
+        btn_sachcontrongkho.setPreferredSize(new Dimension(120, 30)); // Đặt lại kích thước của nút btn_sachcontrongkho
+        jPanel9.setPreferredSize(new Dimension(150, 150)); // Đặt lại kích thước của jPanel9
+    }
+
+    }//GEN-LAST:event_btn_sachcontrongkhoActionPerformed
+private boolean chartVisible2 = false; // Biến cờ để theo dõi trạng thái hiển thị của biểu đồ
+    private void btn_sachmuontrongngayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sachmuontrongngayActionPerformed
+         if (chartVisible2) { // Nếu biểu đồ đang hiển thị
+        jPanel10.remove(chartPanel);
+        jPanel10.revalidate();
+        jPanel10.repaint();
+        chartVisible2 = false; // Đặt trạng thái hiển thị biểu đồ là false
+        btn_sachmuontrongngay.setText("Hiển thị biểu đồ"); // Đặt lại nội dung của nút btn_sachmuontrongngay
+        btn_sachmuontrongngay.setPreferredSize(new Dimension(120, 30)); // Đặt lại kích thước của nút btn_sachmuontrongngay
+        jPanel10.setPreferredSize(new Dimension(150, 150)); // Đặt lại kích thước của jPanel9
+    } else { // Nếu biểu đồ không được hiển thị
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        // Connect to the database
+        String url = "jdbc:mysql://localhost:3306/qltvap";
+        String username = "root";
+        String password = "";
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            // Get the current date
+            LocalDate currentDate = LocalDate.now();
+
+            // Get the previous date
+            LocalDate previousDate = currentDate.minusDays(1);
+
+            // Format the dates as strings
+            String currentDateString = currentDate.toString();
+            String previousDateString = previousDate.toString();
+
+            // Execute the query to get the number of books borrowed on the current date
+            String sql = "SELECT COUNT(*) AS current_count FROM phieumuon WHERE DATE(ngaymuon) = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, currentDateString);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        int currentCount = resultSet.getInt("current_count");
+                        dataset.addValue(currentCount, "Sách được mượn", "Ngày hiện tại");
+                    }
+                }
+            }
+
+            // Execute the query to get the number of books borrowed on the previous date
+            sql = "SELECT COUNT(*) AS previous_count FROM phieumuon WHERE DATE(ngaymuon) = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, previousDateString);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        int previousCount = resultSet.getInt("previous_count");
+                        dataset.addValue(previousCount, "Sách được mượn", "Ngày trước đó");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Create the chart
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Tỉ lệ sách được mượn trong ngày",
+                "Ngày",
+                "Số lượng sách được mượn",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false);
+
+        // Create the chart panel
+        chartPanel = new ChartPanel(chart);
+
+        // Remove previous chart panel (if any)
+        jPanel10.removeAll();
+
+        // Add the new chart panel to jPanel9
+        jPanel10.setLayout(new BorderLayout());
+        jPanel10.add(chartPanel, BorderLayout.CENTER);
+        jPanel10.validate();
+
+        chartVisible2 = true; // Đặt trạng thái hiển thị biểu đồ là true
+        btn_sachmuontrongngay.setText("Ẩn biểu đồ"); // Đặt lại nội dung của nút btn_sachmuontrongngay
+        btn_sachmuontrongngay.setPreferredSize(new Dimension(120, 30)); // Đặt lại kích thước của nút btn_sachmuontrongngay
+        jPanel10.setPreferredSize(new Dimension(150, 150)); // Đặt lại kích thước của jPanel9
+    }
+    }//GEN-LAST:event_btn_sachmuontrongngayActionPerformed
+
+    private void btn_sachduocmuontrongthangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sachduocmuontrongthangActionPerformed
+       if (chartVisible) { // Nếu biểu đồ đang hiển thị
+        jPanel11.remove(chartPanel);
+        jPanel11.revalidate();
+        jPanel11.repaint();
+        chartVisible = false; // Đặt trạng thái hiển thị biểu đồ là false
+        btn_sachduocmuontrongthang.setText("Hiển thị biểu đồ"); // Đặt lại nội dung của nút btn_sachduocmuontrongthang
+        btn_sachduocmuontrongthang.setPreferredSize(new Dimension(120, 30)); // Đặt lại kích thước của nút btn_sachduocmuontrongthang
+        jPanel11.setPreferredSize(new Dimension(150, 150)); // Đặt lại kích thước của jPanel9
+    } else { // Nếu biểu đồ không được hiển thị
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        // Connect to the database
+        String url = "jdbc:mysql://localhost:3306/qltvap";
+        String username = "root";
+        String password = "";
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            // Get the current date
+            LocalDate currentDate = LocalDate.now();
+
+            // Get the date 3 months before the current date
+            LocalDate startDate = currentDate.minusMonths(3);
+
+            // Get the range of months (excluding the current month)
+            YearMonth startYearMonth = YearMonth.from(startDate);
+            YearMonth endYearMonth = YearMonth.from(currentDate.minusMonths(1));
+
+            // Iterate over the range of months
+            YearMonth currentYearMonth = startYearMonth;
+            while (!currentYearMonth.isAfter(endYearMonth)) {
+                // Format the year-month as string (e.g., "2023-03" for March 2023)
+                String yearMonthString = currentYearMonth.toString();
+
+                // Execute the query to get the number of books borrowed in the current month
+                String sql = "SELECT COUNT(*) AS count FROM phieumuon WHERE DATE_FORMAT(ngaymuon, '%Y-%m') = ?";
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.setString(1, yearMonthString);
+                    try (ResultSet resultSet = statement.executeQuery()) {
+                        if (resultSet.next()) {
+                            int count = resultSet.getInt("count");
+                            dataset.addValue(count, "Sách được mượn", yearMonthString);
+                        }
+                    }
+                }
+
+                // Move to the next month
+                currentYearMonth = currentYearMonth.plusMonths(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Create the chart
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Tỉ lệ sách được mượn trong 3 tháng gần nhất",
+                "Tháng",
+                "Số lượng sách được mượn",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false);
+
+        // Create the chart panel
+        chartPanel = new ChartPanel(chart);
+
+        // Remove previous chart panel (if any)
+        jPanel11.removeAll();
+
+        // Add the new chart panel to jPanel9
+        jPanel11.setLayout(new BorderLayout());
+        jPanel11.add(chartPanel, BorderLayout.CENTER);
+        jPanel11.validate();
+
+        chartVisible = true; // Đặt trạng thái hiển thị biểu đồ là true
+        btn_sachduocmuontrongthang.setText("Ẩn biểu đồ"); // Đặt lại nội dung của nút btn_sachduocmuontrongthang
+        btn_sachduocmuontrongthang.setPreferredSize(new Dimension(120, 30)); // Đặt lại kích thước của nút btn_sachduocmuontrongthang
+        jPanel11.setPreferredSize(new Dimension(150, 150)); // Đặt lại kích thước của jPanel9
+    }
+    }//GEN-LAST:event_btn_sachduocmuontrongthangActionPerformed
+
+    private void btn_top3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_top3ActionPerformed
+    if (chartVisible) { // Nếu biểu đồ đang hiển thị
+        jPanel12.remove(chartPanel);
+        jPanel12.revalidate();
+        jPanel12.repaint();
+        chartVisible = false; // Đặt trạng thái hiển thị biểu đồ là false
+        btn_top3.setText("Hiển thị biểu đồ"); // Đặt lại nội dung của nút btn_top3
+        btn_top3.setPreferredSize(new Dimension(120, 30)); // Đặt lại kích thước của nút btn_top3
+        jPanel12.setPreferredSize(new Dimension(150, 150)); // Đặt lại kích thước của jPanel12
+    } else { // Nếu biểu đồ không được hiển thị
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        // Connect to the database
+        String url = "jdbc:mysql://localhost:3306/qltvap";
+        String username = "root";
+        String password = "";
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            // Get the current date
+            LocalDate currentDate = LocalDate.now();
+
+            // Execute the query to get the top 3 most borrowed books on the current date
+            String sql = "SELECT p.id_sach, COUNT(*) AS count, s.tensach FROM phieumuon p JOIN sach s ON p.id_sach = s.id WHERE DATE(p.ngaymuon) = ? GROUP BY p.id_sach, s.tensach ORDER BY count DESC LIMIT 3";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, currentDate.toString());
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        String idSach = resultSet.getString("id_sach");
+                        int count = resultSet.getInt("count");
+                        String tenSach = resultSet.getString("tensach");
+                        dataset.addValue(count, "Số lượng", tenSach);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Create the chart
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Top 3 sách được mượn nhiều nhất trong ngày",
+                "Tên sách",
+                "Số lượng",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false);
+
+        // Create the chart panel
+        chartPanel = new ChartPanel(chart);
+
+        // Remove previous chart panel (if any)
+        jPanel12.removeAll();
+
+        // Add the new chart panel to jPanel12
+        jPanel12.setLayout(new BorderLayout());
+        jPanel12.add(chartPanel, BorderLayout.CENTER);
+        jPanel12.validate();
+
+        chartVisible = true; // Đặt trạng thái hiển thị biểu đồ là true
+        btn_top3.setText("Ẩn biểu đồ"); // Đặt lại nội dung của nút btn_top3
+        btn_top3.setPreferredSize(new Dimension(120, 30)); // Đặt lại kích thước của nút btn_top3
+        jPanel12.setPreferredSize(new Dimension(150, 150)); // Đặt lại kích thước của jPanel12
+    }
+    }//GEN-LAST:event_btn_top3ActionPerformed
+
+    private void btn_top330ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_top330ActionPerformed
+        // TODO add your handling code here:
+         if (chartVisible) { // Nếu biểu đồ đang hiển thị
+        jPanel13.remove(chartPanel);
+        jPanel13.revalidate();
+        jPanel13.repaint();
+        chartVisible = false; // Đặt trạng thái hiển thị biểu đồ là false
+        btn_top330.setText("Hiển thị biểu đồ"); // Đặt lại nội dung của nút btn_top330
+        btn_top330.setPreferredSize(new Dimension(120, 30)); // Đặt lại kích thước của nút btn_top330
+        jPanel13.setPreferredSize(new Dimension(150, 150)); // Đặt lại kích thước của jPanel12
+    } else { // Nếu biểu đồ không được hiển thị
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        // Connect to the database
+        String url = "jdbc:mysql://localhost:3306/qltvap";
+        String username = "root";
+        String password = "";
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            // Get the current date
+            LocalDate currentDate = LocalDate.now();
+
+            // Calculate the start date (30 days ago)
+            LocalDate startDate = currentDate.minusDays(30);
+
+            // Execute the query to get the top 3 most borrowed books in the last 30 days
+            String sql = "SELECT p.id_sach, COUNT(*) AS count, s.tensach FROM phieumuon p JOIN sach s ON p.id_sach = s.id WHERE p.ngaymuon BETWEEN ? AND ? GROUP BY p.id_sach, s.tensach ORDER BY count DESC LIMIT 3";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, startDate.toString());
+                statement.setString(2, currentDate.toString());
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        String idSach = resultSet.getString("id_sach");
+                        int count = resultSet.getInt("count");
+                        String tenSach = resultSet.getString("tensach");
+                        dataset.addValue(count, "Số lượng", tenSach);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Create the chart
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Top 3 sách được mượn nhiều nhất trong 30 ngày",
+                "Tên sách",
+                "Số lượng",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false);
+
+        // Create the chart panel
+        chartPanel = new ChartPanel(chart);
+
+        // Remove previous chart panel (if any)
+        jPanel13.removeAll();
+
+        // Add the new chart panel to jPanel12
+        jPanel13.setLayout(new BorderLayout());
+        jPanel13.add(chartPanel, BorderLayout.CENTER);
+        jPanel13.validate();
+
+        chartVisible = true; // Đặt trạng thái hiển thị biểu đồ là true
+        btn_top330.setText("Ẩn biểu đồ"); // Đặt lại nội dung của nút btn_top330
+        btn_top330.setPreferredSize(new Dimension(120, 30)); // Đặt lại kích thước của nút btn_top330
+        jPanel13.setPreferredSize(new Dimension(150, 150)); // Đặt lại kích thước của jPanel12
+    }
+    }//GEN-LAST:event_btn_top330ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1507,7 +1918,12 @@ public class quanlithuvienap extends javax.swing.JFrame {
     private javax.swing.JButton btnTrasach;
     private javax.swing.JButton btnXoa1;
     private javax.swing.JButton btnXoa4;
-    private javax.swing.JButton btn_thongke;
+    private javax.swing.JButton btn_sachcontrongkho;
+    private javax.swing.JButton btn_sachduocmuontrongthang;
+    private javax.swing.JButton btn_sachmuontrongngay;
+    private javax.swing.JButton btn_tilequahan;
+    private javax.swing.JButton btn_top3;
+    private javax.swing.JButton btn_top330;
     private javax.swing.JButton btnluu3;
     private javax.swing.JButton btnsua3;
     private javax.swing.JButton btnthem3;
@@ -1519,13 +1935,10 @@ public class quanlithuvienap extends javax.swing.JFrame {
     private javax.swing.JTable hienthi3;
     private javax.swing.JTabbedPane hienthibandoc;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -1538,36 +1951,32 @@ public class quanlithuvienap extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextField txtDiachi;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtM1t;
     private javax.swing.JTextField txtMsm;
     private javax.swing.JTextField txtMsv;
     private javax.swing.JTextField txtMsvm;
-    private javax.swing.JTextField txtMtn;
     private javax.swing.JTextField txtSdt;
     private javax.swing.JTextField txtSoluong;
-    private javax.swing.JTextField txtT1t;
     private javax.swing.JTextField txtTacgia;
     private javax.swing.JTextField txtTensach;
     private javax.swing.JTextField txtTensv;
     private javax.swing.JTextField txtTheloai;
-    private javax.swing.JTextField txtTsdg;
-    private javax.swing.JTextField txtTslc;
-    private javax.swing.JTextField txtTsm;
-    private javax.swing.JTextField txtTsstn;
-    private javax.swing.JTextField txtTst;
-    private javax.swing.JTextField txtquahan;
     // End of variables declaration//GEN-END:variables
 }

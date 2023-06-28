@@ -104,45 +104,88 @@ public class SinhvienModify {
     }
     
     
-    public static void update(Sinhvien std){
-           
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            //lay tat ca danh sach sinh vien
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/qltvap", "root", "");
-            //querry
-            String sql = "update sinhvien set tensv=?,diachi=?,sdt=?,email=? where msv=?";
+ public static void update(Sinhvien std) {
+    // Không thực hiện kiểm tra mã sinh viên ở đây vì đã thực hiện ở phương thức btnLuu4ActionPerformed
+    Connection connection = null;
+    PreparedStatement statement = null;
+    try {
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/qltvap", "root", "");
 
-            statement = connection.prepareCall(sql);
-            
-            statement.setString(1,std.getTensv());
-             statement.setString(2,std.getDiachi());
-              statement.setString(3,std.getSdt());
-               statement.setString(4,std.getEmail());
-                statement.setString(5,std.getMsv());
-                    statement.execute();
-            }
-        catch (SQLException ex) {
-            Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if(statement != null){
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        String sql = "UPDATE sinhvien SET msv=?, tensv=?, diachi=?, sdt=?, email=? WHERE msv=?";
+
+        statement = connection.prepareStatement(sql);
+        statement.setString(1, std.getMsv());
+        statement.setString(2, std.getTensv());
+        statement.setString(3, std.getDiachi());
+        statement.setString(4, std.getSdt());
+        statement.setString(5, std.getEmail());
+        statement.setString(6, std.getMsvOriginal()); // Sử dụng giá trị msv ban đầu
+
+        statement.executeUpdate();
+    } catch (SQLException ex) {
+        Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        //ketthuc
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
+}
+ 
+  public static boolean checkMsvExists(String msv) {
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+    boolean exists = false;
+    try {
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/qltvap", "root", "");
+
+        String sql = "SELECT * FROM sinhvien WHERE msv=?";
+
+        statement = connection.prepareStatement(sql);
+        statement.setString(1, msv);
+        resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            exists = true; // Mã sinh viên đã tồn tại trong cơ sở dữ liệu
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    return exists;
+}
     
      public static void delete(String msv){
            
@@ -316,5 +359,51 @@ public class SinhvienModify {
         
         return sinhvien;
     }
+       
+   
+public static boolean checkMsvExistsInPhieuMuon(String msv) {
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+    boolean exists = false;
+    try {
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/qltvap", "root", "");
+
+        String sql = "SELECT msv_muon FROM phieumuon WHERE msv_muon = ?";
+
+        statement = connection.prepareStatement(sql);
+        statement.setString(1, msv);
+        resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            exists = true;
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SinhvienModify.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    return exists;
+}
 
 }
